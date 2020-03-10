@@ -21,7 +21,7 @@ client.on('ready', () => {
 
 client.on('guildCreate', (guild) => {
     let channels = guild.channels.filter(channel => channel.type === 'text' && channel.permissionsFor(guild.members.get(client.user.id)).has('SEND_MESSAGES'));
-    if (channels.size > 0) channels.first().send('Vous avez invité le bot Rainbow Role à fonctionner correctement, vous devez avoir un rôle «Rainbow» sur le serveur, le rôle du bot devrait avoir le droit de «gérer les rôles», et d’être au-dessus du rôle de «Rainbow». Bot By Loule');
+    if (channels.size > 0) channels.first().send('');
 });
 
 client.on('message', (message) => {
