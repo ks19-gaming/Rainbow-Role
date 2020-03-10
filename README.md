@@ -1,30 +1,30 @@
-# hello-express
+# Discord-Rainbow-Role
+Getting a Rainbow Role with a Discord Bot **using Discord.JS**
 
-A server that serves a webpage, its resources, and some data
+## Usage:
+1. Install [**Discord.JS**](https://github.com/hydrabolt/discord.js/)
+2. Get this code
+3. Change config.js
 
+## Config:
+| Option        | Usage         |
+| ------------- |---------------|
+| token         | Your Discord API token |
+| servers       | List your server ids here ([how to get my server id?](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-server-ID-))      |
+| roleName      | The name of the role you'd like to automatically change it's color      |
+| colors        | The number of colors that'll be used      |
+| speed         | The speed on which it needs to change (in ms)      |
+| logging       | If you want to log when the color has changed in the console (can be really messy)      |
 
-## Your Project
+### Attention!
+**If you are using a speed that's lower than 60000ms (1 minute) Your bot might get IP-banned!**
 
-On the front-end,
+For permissions, the role from the bot needs to be higher placed than the role you want to change it's color from in the server settings, like this
 
-- Edit `views/index.html` to change the content of the webpage
-- `public/client.js` is the javacript that runs when you load the webpage
-- `public/style.css` is the styles for `views/index.html`
-- Drag in `assets`, like images or music, to add them to your project
+[Admin]
 
-On the back-end,
+[BotRole]
 
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+[RoleYouWantToChangeItsColorFrom]
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy.
-
-
-## Made by [Glitch](https://glitch.com/)
-
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
-
-Find out more [about Glitch](https://glitch.com/about).
-
-( ᵔ ᴥ ᵔ )
+[@everyone]
