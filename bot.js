@@ -1,82 +1,104 @@
-var discord = require('discord.js');
-var fs = require('fs');
-var randomColour = require('randomcolor'); // yes, the creator of this package does not speak the real english
-var Config = require('./config.json');
+const Discord = require("discord.js");
+const client = new Discord.Client();
+const colors = ["RANDOM"];
+const stop = [];
 
-class Bot {
-    constructor(){
-        this.servers = require('./servers.json');
-        this.discordClient = new discord.Client({sync: true});
-        
-        this.discordClient.on("ready", () => {this.initialize();});
-        
-        this.discordClient.on("message", (msg) => {this.processMessage(msg)});
-        
-        this.discordClient.login(Config.discord_token);
-    }
-    
-    initialize() {
-        this.log("Connected to discord.");
-        
-        setInterval(() => {
-            this.randomizeRoleColors();
-        }, Config.randomize_delay*1000);
-    }
-    
-    processMessage(msg) {
-        if(msg.content.startsWith(">addrole")) {
-            for(var role of msg.mentions.roles.array()) {
-                msg.reply("Added " + role + " to list of rainbow roles.");
-                
-                this.addRainbowRole(msg.guild.id, role.id);
-            }
-        }
-    }
-    
-    randomizeRoleColors() {
-        for(var server in this.servers) {
-            var liveGuild = this.discordClient.guilds.get(server);
-            
-            if (!liveGuild) {
-                this.error("Guild with ID " + server+ " no longer exists or the bot has been removed from it.");
-                continue;
-            }
-            
-            for(var role of this.servers[server]) {
-                var liveRole = liveGuild.roles.get(role);
-                
-                liveRole.setColor(randomColour(), "Rainbowbot random role color randomizer.");
-            }
-        }
-    }
-    
-    addRainbowRole(guild, role) {
-        if(this.servers[guild] == undefined) {
-            this.servers[guild] = [];
-        }
-        
-        for(var existingRole of this.servers[guild]) {
-            if(existingRole == role) {
-                return "That role has already been added.";
-            }
-        }
-        
-        this.servers[guild].push(role);
-        this.saveServers();
-    } 
-    
-    saveServers() {
-        fs.writeFileSync("./servers.json", JSON.stringify(this.servers), "utf8");
-        this.log("Saved servers file.");
-    }
-    
-    log(message) {
-        console.log("\x1b[32mINFO\x1b[37m - \x1b[0m" + message);
-    }
-    
-    error(message) {
-        console.log("\x1b[31mERROR\x1b[37m - \x1b[0m" + message);
-    }
+client.on("guildCreate", guild => {
+  let channels = guild.channels.filter(
+    channel =>
+      channel.type === "text" &&
+      channel
+        .permissionsFor(guild.members.get(client.user.id))
+        .has("SEND_MESSAGES")
+  );
+  if (channels.size > 0) channels.first().send("");
+});
+client.on("message", message => {
+  if (message.channel.type !== "text") return;
+  if (message.content === "!off") {
+    stop.push(message.guild.id);
+    return message.channel.send({
+      embed: {
+        title:
+          "Alright rainbow role stop",
+        color: 0xff2222
+      }
+    });
+  }
+  if (message.content === "!on") {
+const Discord = require("discord.js");
+const client = new Discord.Client();
+const stop = [];
+  }
+});
+client.on("guildCreate", guild => {
+  let channels = guild.channels.filter(
+    channel =>
+      channel.type === "text" &&
+      channel
+        .permissionsFor(guild.members.get(client.user.id))
+        .has("SEND_MESSAGES")
+  );
+  if (channels.size > 0) channels.first().send("");
+});
+client.on("message", message => {
+  if (message.channel.type !== "text") return;
+  if (message.content === "!off") {
+    stop.push(message.guild.id);
+    return message.channel.send({
+      embed: {
+        title:
+          "Alright rainbow role stop",
+        color: 0xff2222
+      }
+    });
+  }
+  if (message.content === "!on") {
+    stop.splice(stop.indexOf(message.guild.id), 1);
+    return message.channel.send({
+      embed: {
+        title:
+          "Alright Rainbow role is Start !",
+        color: 0x00ff00
+      }
+    });
+  }
+});
+
+client.on("ready", () => {
+  console.log(`Logged in as ${client.user.tag}`);
+  client.user.setStatus("online");
+});
+
+    client.on('message', message => {//new msg event
+  if(!message.channel.guild) return;
+  if(message.content.startsWith('r!setup')) {//to create the rainbow role
+	  let role = message.guild.roles.find('name', 'Rainbow')
+    if(role) return message.channel.send(`❌ **this role is Already setup**`)//if the role already created return with this msg
+  //start of create role 
+  if(!role){
+   role = message.guild.createRole({
+   name: "Rainbow",//the role will create name
+   color: "#000000",//the default color
+   permissions:[]//the permissions
+ //end of create role
+ 
+})
+
+
 }
+message.channel.send('✅ **Successfully Set Up**')//if the step completed
+}})
 
-var instance = new Bot();
+client.on('ready', () => {//new ready event
+  setInterval(function(){
+      client.guilds.forEach(g => { 
+                  var role =g.roles.find('name', 'Rainbow');//rainbow role name
+                  if (role) {
+                      role.edit({color : "RANDOM"});
+                  };
+      });
+  }, 5000); //the rainbow time
+
+})         
+client.login(process.env.TOKEN);
