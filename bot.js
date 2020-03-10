@@ -15,12 +15,14 @@ async function color () {
     }, 1500).then(color);
 }
 client.on('ready', () => {
+    console.log("OK.")
     color();
 });
 client.on('guildCreate', (guild) => {
     let channels = guild.channels.filter(channel => channel.type === 'text' && channel.permissionsFor(guild.members.get(client.user.id)).has('SEND_MESSAGES'));
-    if (channels.size > 0) channels.first().send('Вы пригласили бота **Rainbow Role**.\nДля его корректного функционирования у вас на сервере должна быть роль `Rainbow`, роль бота должна иметь право `управление ролями`, и быть выше роли `Rainbow`.\nДля управления ботом есть команды:\n`::stop` - останавливает изменение цвета радужной роли\n`::start` - восстанавливает изменение цвета радужной роли\n**Обе команды требуют право `Администратор` или `Управление сервером`!**\n\nЕсли у вас возникли какие-то трудности - обратитесь к <@421030089732653057> (`zziger#8040`)');
+    if (channels.size > 0) channels.first().send('Vous avez invité le bot Rainbow Role à fonctionner correctement, vous devez avoir un rôle «Rainbow» sur le serveur, le rôle du bot devrait avoir le droit de «gérer les rôles», et d’être au-dessus du rôle de «Rainbow». Bot By Loule');
 });
+
 client.on('message', (message) => {
     if (message.channel.type !== 'text') return;
     if (message.member.hasPermission('MANAGE_GUILD') || message.member.hasPermission('ADMINISTRATOR') || message.member.id === message.guild.owner.id) {

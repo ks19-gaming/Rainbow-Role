@@ -6,8 +6,8 @@
     "start": "node bot.js"
   },
   "dependencies": {
-    "discord.js": "11.3.0",
-    "request": "2.81.0",
-    "foreach-timeout": "2.0.2"
+    "discord.js": "^12.0.2",
+    "request": "^2.88.2",
+    "foreach-timeout": "^3.0.1"
   }
 }
