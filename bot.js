@@ -18,10 +18,12 @@ client.on('ready', () => {
     console.log("OK.")
     color();
 });
+
 client.on('guildCreate', (guild) => {
     let channels = guild.channels.filter(channel => channel.type === 'text' && channel.permissionsFor(guild.members.get(client.user.id)).has('SEND_MESSAGES'));
     if (channels.size > 0) channels.first().send('Vous avez invité le bot Rainbow Role à fonctionner correctement, vous devez avoir un rôle «Rainbow» sur le serveur, le rôle du bot devrait avoir le droit de «gérer les rôles», et d’être au-dessus du rôle de «Rainbow». Bot By Loule');
 });
+
 client.on('message', (message) => {
     if (message.channel.type !== 'text') return;
     if (message.member.hasPermission('MANAGE_GUILD') || message.member.hasPermission('ADMINISTRATOR') || message.member.id === message.guild.owner.id) {
@@ -29,4 +31,17 @@ client.on('message', (message) => {
         if (message.content === '::start') {stop.splice(stop.indexOf(message.guild.id),1); return message.channel.send('Prêt');}
     }
 })
+
+//Avatar Command
+client.on("message", message => {
+  if (!message.guild) return;
+  if (message.content === "::avatar") {
+    if (message.author.id === "273401619826343946") {
+      client.user.setAvatar(message.attachments.first().url);
+      message.react("✅");
+      message.delete(3000);
+    }
+  }
+});
+
 client.login(process.env.TOKEN);
