@@ -30,18 +30,6 @@ client.on('message', (message) => {
         if (message.content === '::stop') {stop.push(message.guild.id); return message.channel.send('Prêt');}
         if (message.content === '::start') {stop.splice(stop.indexOf(message.guild.id),1); return message.channel.send('Prêt');}
     }
-})
-
-//Avatar Command
-client.on("message", message => {
-  if (!message.guild) return;
-  if (message.content === "::avatar") {
-    if (message.author.id === "273401619826343946") {
-      client.user.setAvatar(message.attachments.first().url);
-      message.react("✅");
-      message.delete(3000);
-    }
-  }
 });
 
 client.login(process.env.TOKEN);
